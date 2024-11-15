@@ -62,10 +62,4 @@ The model will be deployed via Gradio, providing a user-friendly interface. The 
 This car price estimation project utilized Random Forest Regressor as the model, achieving an RMSE of 66,035.47. Label Encoding was preferred over One-Hot Encoding for easier readability. The car price estimation service offers reliable price estimates for private users and dealers. The final deployment through Gradio offers a user-friendly experience with minimal latency.
 
 ## References
-<<<<<<< HEAD
-Data was sourced from GitHub, and tools like Google Colab, Kaggle, and Scikit-learn supported data handling and model development. The Random Forest model selection was based on course curriculum and academic resources. Privacy regulations, including GDPR, are observed since no personal data is collected.
-=======
 We used GitHub, Scikit-learn, gradio, Pandas and python to build the program.
-
-
->>>>>>> 043508aa2c56821faaea91a9ca670bbc84b83ce2
