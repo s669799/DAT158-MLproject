@@ -6,6 +6,12 @@
 ## Introduction
 The purpose of this project is to develop a car price estimation service that provides users with a reliable estimate of a car’s current market value, requiring no login or sharing of sensitive information. The target users are private individuals seeking insight into their car's market value and professional stakeholders, such as car dealers, who can benefit from better pricing and market adjustments.
 
+
+
+## running the project
+In the root of the git repo there is a notebook called Cars.ipynb with comments along the way for why we choose the techniques that we did. At the bottom of the notebook there is a block for a gradio application that you can run from the notebook and get a webpage. Alternatively all the codeblocks have been extracted to a python script that can be found in src/mlModel.py. When running this you should get a gradio webapp too, but it is a little slower.
+
+
 ## Business Objectives
 The service is designed to meet several key business objectives:
 * Optimize Pricing: Provide realistic car price estimates to dealers and sellers that reflect current market conditions, allowing them to set competitive prices.
@@ -73,4 +79,3 @@ This car price estimation project utilized Random Forest Regressor as the primar
 
 ## References
 Data was sourced from GitHub, and tools like Google Colab, Kaggle, and Scikit-learn supported data handling and model development. The Random Forest model selection was based on course curriculum and academic resources. Privacy regulations, including GDPR, are observed since no personal data is collected.
-

@@ -272,8 +272,6 @@ rmse = np.sqrt(np.mean((np.expm1(y_pred) - np.expm1(y_val))**2))
 import gradio as gr
 import pandas as pd
 
-
-
 def predict_new_data(milage, horsepower, displacement, cylinders, model_year, brand, fuel_type, ext_col, int_col, transmission, accident, clean_title):
     # Create a dictionary to convert input to DataFrame format
     user_data = {
@@ -292,7 +290,7 @@ def predict_new_data(milage, horsepower, displacement, cylinders, model_year, br
     }
 
     user_data_df = pd.DataFrame(user_data)
-    user_data_df = user_data_df.reindex(columns=X_train.columns, fill_value=0)
+    user_data_df = user_data_df.reindex(columns=X_train.columns)
 
     user_data_df['milage'] = user_data_df['milage'].astype(float)
 
@@ -311,18 +309,17 @@ def predict_new_data(milage, horsepower, displacement, cylinders, model_year, br
     user_data_df["transmission"] = user_data_df["transmission"].replace({'Automatic':1, 'Dual Clutch':2, 'Manual':3, 'Variator':4, 'Other':5})
 
     # Encoding categorical variables
-    categorical_columns = ['brand', 'fuel_type', 'ext_col', 'int_col']
 
     for col in categorical_columns:
         if col in user_data_df.columns:
             user_data_df[col] = lb.fit_transform(user_data_df[col])
 
-    # print("Current formulation of the user data: \n", user_data_df.head())
 
 
 
     prediction = random_search_rf.predict(user_data_df)
-    return f"{prediction[0]} USD"
+    prediction = np.expm1(prediction)  # Reverse the log1p transformation
+    return f"{prediction[0]:.2f} USD"
 
 
 inputs = [
@@ -331,10 +328,10 @@ inputs = [
     gr.Number(label="Displacement"),
     gr.Number(label="Cylinders"),
     gr.Number(label="Model Year"),
-    gr.Dropdown(choices=["Toyota", "Mercedes", "Volvo"], label="Brand"),
+    gr.Dropdown(choices=["Toyota", "Mercedes", "Volvo", "Saab", "Ford", "Hyundai", "Lamborghini", "VolksWagen", "BMW", "Audi", "Chevrolet", "Honda", "Nissan", "Kia", "Mazda", "Subaru", "Tesla"], label="Brand"),
     gr.Dropdown(choices=["Gasoline", "Diesel", "Electric", "Hybrid", "Flex Fuel"], label="Fuel Type"),
-    gr.Dropdown(choices=["Black", "Gray", "Red"], label="Exterior Color"),
-    gr.Dropdown(choices=["Black", "Gray", "White"], label="Interior Color"),
+    gr.Dropdown(choices=["Black", "Gray", "Red", "Yellow", "Orange", "Blue", "Green", "White", "Silver", "Brown"], label="Exterior Color"),
+    gr.Dropdown(choices=["Black", "Gray", "White", "Brown", "Beige", "Red", "Blue"], label="Interior Color"),
     gr.Dropdown(choices=["Automatic", "Manual", "Variator", "Dual Clutch", "Other"], label="Transmission"),
     gr.Dropdown(choices=["None reported", "At least 1 accident or damage reported"], label="Accident"),
     gr.Dropdown(choices=["Yes", "No"], label="Clean Title")
@@ -351,5 +348,5 @@ demo = gr.Interface(
     outputs=["text"],
 )
 
-
-demo.launch()
+if __name__ == "__main__":
+    demo.launch()
